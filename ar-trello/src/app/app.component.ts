@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import Arweave from 'arweave/web';
+import { TransactionUploader } from 'arweave/web/lib/transaction-uploader';
+
+import { UUID } from 'angular2-uuid';
+
+import { and, or, equals } from 'arql-ops';
 
 // Since v1.5.1 you're now able to call the init function for the web version without options.
 // The current path will be used by default, recommended.
@@ -26,25 +31,25 @@ export class AppComponent implements OnInit {
 
     console.log(address);
 
-    const winston = await arweave.wallets.getBalance(address);
+    /* const winston = await arweave.wallets.getBalance(address);
 
     const ar = arweave.ar.winstonToAr(winston);
 
     console.log(winston);
-    // 125213858712
 
-    console.log(ar);
-    // 0.125213858712
+    console.log(ar); */
 
     const transactionA = await arweave.createTransaction({
-      data: 'Transaction A'
+      data: UUID.UUID()
     }, this.key);
+
+    transactionA.addTag('app', 'arTrello');
 
     await arweave.transactions.sign(transactionA, this.key);
 
     console.log(transactionA);
 
-    const uploader = await arweave.transactions.getUploader(transactionA);
+    const uploader: TransactionUploader = await arweave.transactions.getUploader(transactionA);
 
     while (!uploader.isComplete) {
       await uploader.uploadChunk();
@@ -52,8 +57,16 @@ export class AppComponent implements OnInit {
     }
 
     // Get the data decode as string data
-    arweave.transactions.getData(transactionA.id, {decode: true, string: true}).then(data => {
-      console.log(data);
-    });
+    const data = await arweave.transactions.getData(transactionA.id, {decode: true, string: true});
+
+    console.log(data);
+
+    const myQuery = and(
+      equals('app', 'arTrello')
+    );
+
+    const results = await arweave.arql(myQuery);
+
+    console.log(results);
   }
 }
