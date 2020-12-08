@@ -17,25 +17,43 @@ export class AppComponent implements OnInit {
 
   key: any;
 
-  ngOnInit(): void {
-    arweave.wallets.generate().then((key) => {
-      this.key = key;
-      console.log(key);
+  async ngOnInit() {
+    this.key = await arweave.wallets.generate();
 
-      arweave.wallets.jwkToAddress(this.key).then((address) => {
-        console.log(address);
+    console.log(this.key);
 
-        arweave.wallets.getBalance(address).then((balance) => {
-          const winston = balance;
-          const ar = arweave.ar.winstonToAr(balance);
+    const address = await arweave.wallets.jwkToAddress(this.key);
 
-          console.log(winston);
-          // 125213858712
+    console.log(address);
 
-          console.log(ar);
-          // 0.125213858712
-      });
-      });
+    const winston = await arweave.wallets.getBalance(address);
+
+    const ar = arweave.ar.winstonToAr(winston);
+
+    console.log(winston);
+    // 125213858712
+
+    console.log(ar);
+    // 0.125213858712
+
+    const transactionA = await arweave.createTransaction({
+      data: 'Transaction A'
+    }, this.key);
+
+    await arweave.transactions.sign(transactionA, this.key);
+
+    console.log(transactionA);
+
+    const uploader = await arweave.transactions.getUploader(transactionA);
+
+    while (!uploader.isComplete) {
+      await uploader.uploadChunk();
+      console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+    }
+
+    // Get the data decode as string data
+    arweave.transactions.getData(transactionA.id, {decode: true, string: true}).then(data => {
+      console.log(data);
     });
   }
 }
