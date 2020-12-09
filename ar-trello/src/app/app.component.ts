@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
 
     transactionA.addTag('app', 'arTrello');
 
-    await arweave.transactions.sign(transactionA, this.key);
+    await arweave.transactions.sign(transactionA, this.key, { saltLength: 1 });
 
     console.log(transactionA);
 
