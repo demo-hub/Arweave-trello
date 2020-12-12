@@ -6,6 +6,7 @@ import { TransactionUploader } from 'arweave/web/lib/transaction-uploader';
 import { UUID } from 'angular2-uuid';
 
 import { and, or, equals } from 'arql-ops';
+import Transaction from 'arweave/web/lib/transaction';
 
 // Since v1.5.1 you're now able to call the init function for the web version without options.
 // The current path will be used by default, recommended.
@@ -65,8 +66,20 @@ export class AppComponent implements OnInit {
       equals('app', 'arTrello')
     );
 
-    const results = await arweave.arql(myQuery);
+    const results: string[] = await arweave.arql(myQuery);
 
     console.log(results);
+
+    results.forEach(async element => {
+      const transaction = await arweave.transactions.get(element);
+
+      console.log(transaction);
+
+      transaction.get('tags').forEach(tag => {
+        const key = tag.get('name', {decode: true, string: true});
+        const value = tag.get('value', {decode: true, string: true});
+        console.log(`${key} : ${value}`);
+      });
+    });
   }
 }
