@@ -40,8 +40,6 @@ export class CardStore {
 
     await arweave.transactions.sign(transactionA, key, { saltLength: 1 });
 
-    console.log(transactionA);
-
     const uploader: TransactionUploader = await arweave.transactions.getUploader(transactionA);
 
     while (!uploader.isComplete) {
@@ -55,24 +53,20 @@ export class CardStore {
     return this._addCard(card);
   }
 
-  async getToDoCards(): Promise<CardSchema[]> {
+  async getCards(state: string): Promise<CardSchema[]> {
     const myQuery = and(
       equals('app', 'arTrello'),
-      equals('state', 'To Do')
+      equals('state', state)
     );
 
     const results: string[] = await arweave.arql(myQuery);
-
-    console.log(results);
 
     const result: CardSchema[] = [];
 
     for (const r of results) {
       const transaction = await arweave.transactions.getData(r, {decode: true, string: true});
 
-      if (JSON.parse(transaction.toString()).id) {
-        result.push(JSON.parse(transaction.toString()));
-      }
+      result.push(JSON.parse(transaction.toString()));
     }
 
     return result;

@@ -44,7 +44,6 @@ export class ListComponent implements OnInit {
   }
   async onEnter(value: string, state: string) {
     const cardId = await this.cardStore.newCard(value, state);
-    console.log(cardId)
     this._ngZone.run(() => {
       this.list.cards.push(cardId);
   });

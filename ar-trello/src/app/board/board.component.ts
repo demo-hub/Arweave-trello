@@ -14,7 +14,12 @@ export class BoardComponent implements OnInit {
   async setMockData() {
     this.cardStore = new CardStore();
 
-    const toDoCards = await this.cardStore.getToDoCards();
+    const toDoCards = await this.cardStore.getCards('To Do');
+
+    const doingCards = await this.cardStore.getCards('Doing');
+
+    const doneCards = await this.cardStore.getCards('Done');
+
     this._ngZone.run(() => {
       const lists: ListSchema[] = [
         {
@@ -23,11 +28,11 @@ export class BoardComponent implements OnInit {
         },
         {
           name: 'Doing',
-          cards: []
+          cards: doingCards
         },
         {
           name: 'Done',
-          cards: []
+          cards: doneCards
         }
       ];
 
