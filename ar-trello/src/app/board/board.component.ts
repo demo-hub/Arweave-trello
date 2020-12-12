@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { CardStore } from '../CardStore';
 import { ListSchema } from '../ListSchema';
 
@@ -10,28 +10,33 @@ import { ListSchema } from '../ListSchema';
 export class BoardComponent implements OnInit {
   cardStore: CardStore;
   lists: ListSchema[];
-  constructor() { }
-  setMockData(): void {
+  constructor(private _ngZone: NgZone) { }
+  async setMockData() {
     this.cardStore = new CardStore();
-    const lists: ListSchema[] = [
-      {
-        name: 'To Do',
-        cards: []
-      },
-      {
-        name: 'Doing',
-        cards: []
-      },
-      {
-        name: 'Done',
-        cards: []
-      }
-    ];
-    this.lists = lists;
+
+    const toDoCards = await this.cardStore.getToDoCards();
+    this._ngZone.run(() => {
+      const lists: ListSchema[] = [
+        {
+          name: 'To Do',
+          cards: toDoCards
+        },
+        {
+          name: 'Doing',
+          cards: []
+        },
+        {
+          name: 'Done',
+          cards: []
+        }
+      ];
+
+      this.lists = lists;
+  });
   }
 
-  ngOnInit() {
-    this.setMockData();
+  async ngOnInit() {
+    await this.setMockData();
   }
 
 }

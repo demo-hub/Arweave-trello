@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, NgZone, OnInit } from '@angular/core';
 import { ListSchema } from '../ListSchema';
 import { CardStore } from '../CardStore';
 @Component({
@@ -10,11 +10,11 @@ export class ListComponent implements OnInit {
   @Input() list: ListSchema;
   @Input() cardStore: CardStore;
   displayAddCard = false;
-  constructor() {}
+  constructor(private _ngZone: NgZone) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {console.log(this.list)}
   allowDrop($event) {
     $event.preventDefault();
   }
@@ -42,8 +42,11 @@ export class ListComponent implements OnInit {
       target.appendChild(document.getElementById(data));
     }
   }
-  onEnter(value: string) {
-    const cardId = this.cardStore.newCard(value);
-    this.list.cards.push(cardId);
+  async onEnter(value: string, state: string) {
+    const cardId = await this.cardStore.newCard(value, state);
+    console.log(cardId)
+    this._ngZone.run(() => {
+      this.list.cards.push(cardId);
+  });
   }
 }
