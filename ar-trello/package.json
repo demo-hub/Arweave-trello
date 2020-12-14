@@ -24,6 +24,7 @@
         "arweave": "https://github.com/demo-hub/arweave-js",
         "rxjs": "~6.4.0",
         "tslib": "^1.10.0",
+        "weaveid": "^1.0.26",
         "zone.js": "~0.9.1"
     },
     "devDependencies": {
