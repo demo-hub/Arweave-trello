@@ -9,6 +9,7 @@ import { BoardComponent } from './board/board.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import { MatCardModule } from '@angular/material';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatCardModule } from '@angular/material';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
