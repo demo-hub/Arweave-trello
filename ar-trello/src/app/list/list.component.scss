@@ -1,5 +1,5 @@
 .list {
-    background: lightyellow;
+    background: #E4EC51;
     width: 350px;
     padding: 6px;
     margin: 5px;
@@ -9,6 +9,7 @@
 .list__title {
     margin: 0;
     padding: 16px 0;
+    color: black;
 }
 
 .list a {
@@ -16,6 +17,11 @@
     display: block;
     text-decoration: none;
     margin-top: 10px;
+}
+
+.list__newcard {
+    background-color: #5850EC;
+    color: white;
 }
 
 input {

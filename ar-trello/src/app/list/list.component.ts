@@ -21,6 +21,7 @@ export class ListComponent implements OnInit {
   drop($event) {
     $event.preventDefault();
     const data = $event.dataTransfer.getData("text");
+    console.log(data)
     let target = $event.target;
     const targetClassName = target.className;
     while (target.className !== "list") {

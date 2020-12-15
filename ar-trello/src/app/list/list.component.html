@@ -5,5 +5,6 @@
     </div>
 
     <input #addCardInput type="text" (keyup.enter)="onEnter(addCardInput.value, list.name); addCardInput.value=''; displayAddCard=false;" *ngIf="displayAddCard" autofocus>
-    <a href="#" class="list__newcard" (click)="toggleDisplayAddCard();">Add a card...</a>
+    <br>
+    <button mat-button href="#" class="list__newcard" (click)="toggleDisplayAddCard();">Add a card...</button>
 </div>

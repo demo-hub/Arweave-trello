@@ -67,6 +67,8 @@ export class CardStore {
       const transaction = await arweave.transactions.getData(r, {decode: true, string: true});
 
       result.push(JSON.parse(transaction.toString()));
+
+      result[result.length - 1].id = transaction.toString();
     }
 
     return result;
