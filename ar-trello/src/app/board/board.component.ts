@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { CardStore } from '../CardStore';
-import { ListSchema } from '../ListSchema';
+import { CardStore } from '../cardStore';
+import { ListSchema } from '../listSchema';
 
 @Component({
   selector: 'app-board',

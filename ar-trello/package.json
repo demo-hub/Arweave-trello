@@ -3,11 +3,12 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "node server.js",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "postinstall": "ng build --aot"
     },
     "private": true,
     "dependencies": {
@@ -28,7 +29,9 @@
         "arweave": "https://github.com/demo-hub/arweave-js",
         "arweave-deploy": "https://github.com/demo-hub/arweave-deploy",
         "bootstrap": "^4.5.3",
+        "express": "^4.17.1",
         "hammerjs": "^2.0.8",
+        "path": "^0.12.7",
         "rxjs": "~6.6.3",
         "tslib": "^2.0.0",
         "weaveid": "^1.0.26",
@@ -54,5 +57,9 @@
         "ts-node": "~7.0.0",
         "tslint": "~6.1.0",
         "typescript": "~4.0.5"
+    },
+    "engines": {
+        "node": "~10.15.1",
+        "npm": "~6.4.1"
     }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CardSchema } from '../cardschema';
+import { CardSchema } from '../cardSchema';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',

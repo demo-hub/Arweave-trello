@@ -1,6 +1,6 @@
 import Arweave from 'arweave/web';
 import { TransactionUploader } from 'arweave/web/lib/transaction-uploader';
-import { CardSchema } from './cardschema';
+import { CardSchema } from './cardSchema';
 
 import { and, or, equals } from 'arql-ops';
 
