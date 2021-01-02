@@ -1,6 +1,6 @@
 <div class="list" (dragover)="allowDrop($event)" (drop)="drop($event)">
     <p class="list__title"><strong>{{list.name}}</strong></p>
-    <div class="cards">
+    <div [class]="list.name" class="cards">
         <app-card *ngFor="let card of list.cards" [card]="card"></app-card>
     </div>
 

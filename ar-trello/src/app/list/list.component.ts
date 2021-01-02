@@ -10,15 +10,15 @@ export class ListComponent implements OnInit {
   @Input() list: ListSchema;
   @Input() cardStore: CardStore;
   displayAddCard = false;
-  constructor(private _ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
-  ngOnInit(): void {console.log(this.list)}
+  ngOnInit(): void {}
   allowDrop($event) {
     $event.preventDefault();
   }
-  drop($event) {
+  async drop($event) {
     $event.preventDefault();
     const data = $event.dataTransfer.getData("text");
     console.log(data)
@@ -28,6 +28,7 @@ export class ListComponent implements OnInit {
       target = target.parentNode;
     }
     target = target.querySelector(".cards");
+    console.log(target.className)
     if (targetClassName === "card") {
       $event.target.parentNode.insertBefore(
         document.getElementById(data),
@@ -42,10 +43,12 @@ export class ListComponent implements OnInit {
     } else {
       target.appendChild(document.getElementById(data));
     }
+
+    await this.cardStore.changeState(data, target.className.split(' ')[1]);
   }
   async onEnter(value: string, state: string) {
     const cardId = await this.cardStore.newCard(value, state);
-    this._ngZone.run(() => {
+    this.ngZone.run(() => {
       this.list.cards.push(cardId);
   });
   }

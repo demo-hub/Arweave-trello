@@ -79,4 +79,39 @@ export class CardStore {
 
     return result;
   }
+
+  async changeState(data: any, state: string) {
+    const card = new CardSchema();
+    card.description = data.description;
+    card.created = new Date();
+
+    const key = await arweave.wallets.generate();
+
+    const txData = JSON.stringify(card);
+
+    const transactionA = await arweave.createTransaction({
+      data: txData
+    }, key);
+
+    if (state === 'Do') {
+      state = 'To Do';
+    }
+
+    transactionA.addTag('app', 'arTrello');
+    transactionA.addTag('state', state);
+
+    await arweave.transactions.sign(transactionA, key, { saltLength: 1 });
+
+    const uploader: TransactionUploader = await arweave.transactions.getUploader(transactionA);
+
+    while (!uploader.isComplete) {
+      await uploader.uploadChunk();
+    }
+
+    const transaction = await arweave.transactions.getData(transactionA.id, {decode: true, string: true});
+
+    card.id = transaction.toString();
+
+    return this._addCard(card);
+  }
 }
