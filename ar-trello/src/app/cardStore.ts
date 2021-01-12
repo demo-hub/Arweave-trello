@@ -4,6 +4,10 @@ import { CardSchema } from './cardSchema';
 
 import { and, or, equals } from 'arql-ops';
 
+import { Subject } from 'rxjs';
+
+import WeaveID from 'weaveid';
+
 // Since v1.5.1 you're now able to call the init function for the web version without options.
 // The current path will be used by default, recommended.
 const arweave = Arweave.init({
@@ -16,6 +20,20 @@ const arweave = Arweave.init({
 export class CardStore {
   cards: object = {};
   lastid = -1;
+
+  login = new Subject<any>();
+
+  login$ = this.login.asObservable();
+
+  loginDone(address: any) {
+    this.login.next(address);
+
+    WeaveID.closeModal();
+  }
+
+  getLoginObservable() {
+    return this.login.asObservable();
+  }
 
   _addCard(card: CardSchema) {
     this.cards[card.id] = card;
@@ -33,7 +51,7 @@ export class CardStore {
     card.description = description;
     card.created = new Date();
 
-    const key = await arweave.wallets.generate();
+    const key = await WeaveID.getWallet();
 
     const txData = JSON.stringify(card);
 
@@ -85,7 +103,7 @@ export class CardStore {
     card.description = data.description;
     card.created = new Date();
 
-    const key = await arweave.wallets.generate();
+    const key = await WeaveID.getWallet();
 
     const txData = JSON.stringify(card);
 

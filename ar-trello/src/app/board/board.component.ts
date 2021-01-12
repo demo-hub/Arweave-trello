@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { CardStore } from '../cardStore';
 import { ListSchema } from '../listSchema';
 
@@ -8,36 +8,40 @@ import { ListSchema } from '../listSchema';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  cardStore: CardStore;
+  @Input() store: CardStore;
+
   lists: ListSchema[];
-  constructor(private _ngZone: NgZone) { }
+
+  constructor(private ngZone: NgZone) { }
+
   async setMockData() {
-    this.cardStore = new CardStore();
+    this.store.login$.subscribe(async address => {
+      console.log('ok')
+      const toDoCards = await this.store.getCards('To Do');
 
-    const toDoCards = await this.cardStore.getCards('To Do');
+      const doingCards = await this.store.getCards('Doing');
 
-    const doingCards = await this.cardStore.getCards('Doing');
+      const doneCards = await this.store.getCards('Done');
 
-    const doneCards = await this.cardStore.getCards('Done');
+      this.ngZone.run(() => {
+        const lists: ListSchema[] = [
+          {
+            name: 'To Do',
+            cards: toDoCards
+          },
+          {
+            name: 'Doing',
+            cards: doingCards
+          },
+          {
+            name: 'Done',
+            cards: doneCards
+          }
+        ];
 
-    this._ngZone.run(() => {
-      const lists: ListSchema[] = [
-        {
-          name: 'To Do',
-          cards: toDoCards
-        },
-        {
-          name: 'Doing',
-          cards: doingCards
-        },
-        {
-          name: 'Done',
-          cards: doneCards
-        }
-      ];
-
-      this.lists = lists;
-  });
+        this.lists = lists;
+    });
+    });
   }
 
   async ngOnInit() {
