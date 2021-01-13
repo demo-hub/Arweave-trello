@@ -21,14 +21,12 @@ export class ListComponent implements OnInit {
   async drop($event) {
     $event.preventDefault();
     const data = $event.dataTransfer.getData("text");
-    console.log(data)
     let target = $event.target;
     const targetClassName = target.className;
     while (target.className !== "list") {
       target = target.parentNode;
     }
     target = target.querySelector(".cards");
-    console.log(target.className)
     if (targetClassName === "card") {
       $event.target.parentNode.insertBefore(
         document.getElementById(data),
@@ -43,6 +41,8 @@ export class ListComponent implements OnInit {
     } else {
       target.appendChild(document.getElementById(data));
     }
+
+    console.log(data)
 
     await this.cardStore.changeState(data, target.className.split(' ')[1]);
   }

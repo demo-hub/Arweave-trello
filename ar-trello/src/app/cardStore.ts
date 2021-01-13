@@ -124,9 +124,11 @@ export class CardStore {
     for (const r of results) {
       const transaction = await arweave.transactions.getData(r.node.id, {decode: true, string: true});
 
-      result.push(JSON.parse(transaction.toString()));
+      if (JSON.parse(transaction.toString()).description) {
+        result.push(JSON.parse(transaction.toString()));
 
-      result[result.length - 1].id = transaction.toString();
+        result[result.length - 1].id = transaction.toString();
+      }
     }
 
     return result;
@@ -134,7 +136,7 @@ export class CardStore {
 
   async changeState(data: any, state: string) {
     const card = new CardSchema();
-    card.description = data.description;
+    card.description = JSON.parse(data).description;
     card.created = new Date();
 
     const key = await WeaveID.getWallet();
