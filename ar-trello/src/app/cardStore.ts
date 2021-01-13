@@ -2,7 +2,7 @@ import Arweave from 'arweave/web';
 import { TransactionUploader } from 'arweave/web/lib/transaction-uploader';
 import { CardSchema } from './cardSchema';
 
-import { and, or, equals } from 'arql-ops';
+import { all } from 'ar-gql';
 
 import { Subject } from 'rxjs';
 
@@ -25,8 +25,12 @@ export class CardStore {
 
   login$ = this.login.asObservable();
 
+  address: string;
+
   loginDone(address: any) {
     this.login.next(address);
+
+    this.address = address;
 
     WeaveID.closeModal();
   }
@@ -62,7 +66,7 @@ export class CardStore {
     transactionA.addTag('app', 'arTrello');
     transactionA.addTag('state', state);
 
-    await arweave.transactions.sign(transactionA, key, { saltLength: 1 });
+    await arweave.transactions.sign(transactionA, key);
 
     const uploader: TransactionUploader = await arweave.transactions.getUploader(transactionA);
 
@@ -77,18 +81,48 @@ export class CardStore {
     return this._addCard(card);
   }
 
-  async getCards(state: string): Promise<CardSchema[]> {
-    const myQuery = and(
-      equals('app', 'arTrello'),
-      equals('state', state)
-    );
+  async getCards(state: string, address: string): Promise<CardSchema[]> {
 
-    const results: string[] = await arweave.arql(myQuery);
+    const results = await all(
+      `
+      query($addr: String!, $state: [String!]!, $cursor: String) {
+        transactions(
+          owners: [$addr]
+          tags: [
+            { name: "app", values: "arTrello" }
+            { name: "state", values: $state }
+          ]
+          after: $cursor
+        ) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              block {
+                timestamp
+              }
+              quantity {
+                ar
+              }
+              tags {
+                name
+                value
+              }
+            }
+          }
+        }
+      }
+    `,
+      { addr: address, state: state }
+    );
 
     const result: CardSchema[] = [];
 
     for (const r of results) {
-      const transaction = await arweave.transactions.getData(r, {decode: true, string: true});
+      const transaction = await arweave.transactions.getData(r.node.id, {decode: true, string: true});
 
       result.push(JSON.parse(transaction.toString()));
 

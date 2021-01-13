@@ -16,12 +16,11 @@ export class BoardComponent implements OnInit {
 
   async setMockData() {
     this.store.login$.subscribe(async address => {
-      console.log('ok')
-      const toDoCards = await this.store.getCards('To Do');
+      const toDoCards = await this.store.getCards('To Do', address);
 
-      const doingCards = await this.store.getCards('Doing');
+      const doingCards = await this.store.getCards('Doing', address);
 
-      const doneCards = await this.store.getCards('Done');
+      const doneCards = await this.store.getCards('Done', address);
 
       this.ngZone.run(() => {
         const lists: ListSchema[] = [
