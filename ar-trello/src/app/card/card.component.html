@@ -1,3 +1,4 @@
 <mat-card class="card" draggable="true" (dragstart)="dragStart($event)" id="{{card.id}}">
     {{card.description}}
+    <fa-icon [icon]="times" (click)="deleteCard(card.id)"></fa-icon>
 </mat-card>

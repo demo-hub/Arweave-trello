@@ -48,6 +48,10 @@ export class ListComponent implements OnInit {
     const cardId = await this.cardStore.newCard(value, state);
     this.ngZone.run(() => {
       this.list.cards.push(cardId);
-  });
+    });
+  }
+
+  cardDeleted(id: string) {
+    this.list.cards.splice(this.list.cards.indexOf(JSON.parse(id)), 1);
   }
 }

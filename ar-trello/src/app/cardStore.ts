@@ -54,6 +54,7 @@ export class CardStore {
     const card = new CardSchema();
     card.description = description;
     card.created = new Date();
+    card.active = true;
 
     let key = await WeaveID.getWallet();
 
@@ -181,6 +182,7 @@ export class CardStore {
     const card = new CardSchema();
     card.description = JSON.parse(data).description;
     card.created = new Date();
+    card.active = true;
 
     let key = await WeaveID.getWallet();
 
@@ -214,5 +216,35 @@ export class CardStore {
     card.id = transaction.toString();
 
     return this._addCard(card);
+  }
+
+  async deleteCard(data: any) {
+    const card = new CardSchema();
+    card.description = JSON.parse(data).description;
+    card.created = new Date();
+    card.active = false;
+
+    let key = await WeaveID.getWallet();
+
+    if (!key || Object.keys(key).length === 0) {
+      key = await arweave.wallets.generate();
+    }
+
+    const txData = JSON.stringify(card);
+
+    const transactionA = await arweave.createTransaction({
+      data: txData
+    }, key);
+
+    transactionA.addTag('app', 'arTrello');
+    transactionA.addTag('state', 'To Do');
+
+    await arweave.transactions.sign(transactionA, key, { saltLength: 1 });
+
+    const uploader: TransactionUploader = await arweave.transactions.getUploader(transactionA);
+
+    while (!uploader.isComplete) {
+      await uploader.uploadChunk();
+    }
   }
 }
