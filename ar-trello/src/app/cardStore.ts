@@ -123,7 +123,7 @@ export class CardStore {
           }
         }
       `,
-        { addr: address, state: state }
+        { addr: address, state }
       );
     } else {
       results = await all(
@@ -158,7 +158,7 @@ export class CardStore {
           }
         }
       `,
-        { state: state }
+        { state }
       );
     }
 
