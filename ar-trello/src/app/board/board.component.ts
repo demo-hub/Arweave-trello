@@ -29,27 +29,33 @@ export class BoardComponent implements OnInit {
   async getLists(address?: string) {
       const toDoCards = await this.store.getCards('To Do', address);
 
-      toDoCards.reduce((prev, current) => {
-        return (prev.description === current.description) ?
-        ((new Date(prev.created) > new Date(current.created)) ?
-        toDoCards.splice(toDoCards.indexOf(current), 1)[0] : toDoCards.splice(toDoCards.indexOf(prev), 1)[0]) : current;
-      });
+      if (toDoCards.length > 0) {
+        toDoCards.reduce((prev, current) => {
+          return (prev.description === current.description) ?
+          ((new Date(prev.created) > new Date(current.created)) ?
+          toDoCards.splice(toDoCards.indexOf(current), 1)[0] : toDoCards.splice(toDoCards.indexOf(prev), 1)[0]) : current;
+        });
+      }
 
       const doingCards = await this.store.getCards('Doing', address);
 
-      doingCards.reduce((prev, current) => {
-        return (prev.description === current.description) ?
-        ((new Date(prev.created) > new Date(current.created)) ?
-        doingCards.splice(doingCards.indexOf(current), 1)[0] : doingCards.splice(doingCards.indexOf(prev), 1)[0]) : current;
-      });
+      if (doingCards.length > 0) {
+        doingCards.reduce((prev, current) => {
+          return (prev.description === current.description) ?
+          ((new Date(prev.created) > new Date(current.created)) ?
+          doingCards.splice(doingCards.indexOf(current), 1)[0] : doingCards.splice(doingCards.indexOf(prev), 1)[0]) : current;
+        });
+      }
 
       const doneCards = await this.store.getCards('Done', address);
 
-      doneCards.reduce((prev, current) => {
-        return (prev.description === current.description) ?
-        ((new Date(prev.created) > new Date(current.created)) ?
-        doneCards.splice(doneCards.indexOf(current), 1)[0] : doneCards.splice(doneCards.indexOf(prev), 1)[0]) : current;
-      });
+      if (doneCards.length > 0) {
+        doneCards.reduce((prev, current) => {
+          return (prev.description === current.description) ?
+          ((new Date(prev.created) > new Date(current.created)) ?
+          doneCards.splice(doneCards.indexOf(current), 1)[0] : doneCards.splice(doneCards.indexOf(prev), 1)[0]) : current;
+        });
+      }
 
       toDoCards.forEach(element => {
         if (toDoCards.filter(c => c.description === element.description).length > 1) {
