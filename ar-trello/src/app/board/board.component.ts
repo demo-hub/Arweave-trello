@@ -16,6 +16,17 @@ export class BoardComponent implements OnInit {
 
   async setMockData() {
     this.store.login$.subscribe(async address => {
+      await this.getLists(address);
+    });
+  }
+
+  async ngOnInit() {
+    await this.setMockData();
+
+    await this.getLists();
+  }
+
+  async getLists(address?: string) {
       const toDoCards = await this.store.getCards('To Do', address);
 
       toDoCards.reduce((prev, current) => {
@@ -98,11 +109,6 @@ export class BoardComponent implements OnInit {
 
         this.lists = lists;
     });
-    });
-  }
-
-  async ngOnInit() {
-    await this.setMockData();
   }
 
 }

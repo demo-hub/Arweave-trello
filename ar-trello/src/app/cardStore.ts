@@ -55,7 +55,11 @@ export class CardStore {
     card.description = description;
     card.created = new Date();
 
-    const key = await WeaveID.getWallet();
+    let key = await WeaveID.getWallet();
+
+    if (!key || Object.keys(key).length === 0) {
+      key = await arweave.wallets.generate();
+    }
 
     const txData = JSON.stringify(card);
 
@@ -83,41 +87,80 @@ export class CardStore {
 
   async getCards(state: string, address: string): Promise<CardSchema[]> {
 
-    const results = await all(
-      `
-      query($addr: String!, $state: [String!]!, $cursor: String) {
-        transactions(
-          owners: [$addr]
-          tags: [
-            { name: "app", values: "arTrello" }
-            { name: "state", values: $state }
-          ]
-          after: $cursor
-        ) {
-          pageInfo {
-            hasNextPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              block {
-                timestamp
-              }
-              quantity {
-                ar
-              }
-              tags {
-                name
-                value
+    let results;
+
+    if (address) {
+      results = await all(
+        `
+        query($addr: String!, $state: [String!]!, $cursor: String) {
+          transactions(
+            owners: [$addr]
+            tags: [
+              { name: "app", values: "arTrello" }
+              { name: "state", values: $state }
+            ]
+            after: $cursor
+          ) {
+            pageInfo {
+              hasNextPage
+            }
+            edges {
+              cursor
+              node {
+                id
+                block {
+                  timestamp
+                }
+                quantity {
+                  ar
+                }
+                tags {
+                  name
+                  value
+                }
               }
             }
           }
         }
-      }
-    `,
-      { addr: address, state: state }
-    );
+      `,
+        { addr: address, state: state }
+      );
+    } else {
+      results = await all(
+        `
+        query($state: [String!]!, $cursor: String) {
+          transactions(
+            tags: [
+              { name: "app", values: "arTrello" }
+              { name: "state", values: $state }
+            ]
+            after: $cursor
+          ) {
+            pageInfo {
+              hasNextPage
+            }
+            edges {
+              cursor
+              node {
+                id
+                block {
+                  timestamp
+                }
+                quantity {
+                  ar
+                }
+                tags {
+                  name
+                  value
+                }
+              }
+            }
+          }
+        }
+      `,
+        { state: state }
+      );
+    }
 
     const result: CardSchema[] = [];
 
@@ -139,7 +182,11 @@ export class CardStore {
     card.description = JSON.parse(data).description;
     card.created = new Date();
 
-    const key = await WeaveID.getWallet();
+    let key = await WeaveID.getWallet();
+
+    if (!key || Object.keys(key).length === 0) {
+      key = await arweave.wallets.generate();
+    }
 
     const txData = JSON.stringify(card);
 
