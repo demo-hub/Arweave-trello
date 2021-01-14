@@ -1,6 +1,6 @@
 # Arweave Trello
 
-Trello clone made in Agular 8 using arweave-js to manipulate the data. Based on https://github.com/Dunebook/Trelloclone. Not my idea, saw it on the arweave discord.
+Trello clone made in Angular 8 using arweave-js to manipulate the data. Based on https://github.com/Dunebook/Trelloclone. Not my idea, saw it on the arweave discord.
 
 ## Visuals
 
@@ -8,7 +8,9 @@ Trello clone made in Agular 8 using arweave-js to manipulate the data. Based on 
 
 ## Usage
 
-To serve the app, use *ng serve* or *npm start*. Right now, you only can add cards. The cards will disappear in like 30 mins because I don't have a wallet right now.
+You can use the app in https://arweave.net/AiuMxdNWNItprJo60HPLt0DxiPhGRbHnj3FHchw_ErE.
+
+User manual coming sometime in the future.
 
 ## Support
 
@@ -20,4 +22,4 @@ If you want to contribute, please check the CONTRIBUTING.md file first.
 
 ## Project status
 
-I have some planned improvements/changes that I will be working on soon. I will put this live sometime too. You can check the issues tab to see the progress.
+I have some planned improvements/changes that I will be working on soon. You can check the issues tab to see the progress.
