@@ -1,14 +1,14 @@
-# Arweave Trello
+# Everlasting
 
 Trello clone made in Angular 8 using arweave-js to manipulate the data. Based on https://github.com/Dunebook/Trelloclone. Not my idea, saw it on the arweave discord.
 
 ## Visuals
 
-![screenshot](screenshot.PNG)
+![screenshot](screenshot1.PNG)
 
 ## Usage
 
-You can use the app in https://arweave.net/AiuMxdNWNItprJo60HPLt0DxiPhGRbHnj3FHchw_ErE.
+You can use the app in https://arweave.net/EUYsvgTAOHF_PAY5VVWvGEVnyv01Vw8Au4lDTaQTWyE.
 
 User manual coming sometime in the future.
 
