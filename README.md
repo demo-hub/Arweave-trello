@@ -4,7 +4,7 @@ Trello clone made in Angular 8 using arweave-js to manipulate the data. Based on
 
 ## Visuals
 
-![screenshot](screenshot.PNG)
+![screenshot](screenshot1.PNG)
 
 ## Usage
 
