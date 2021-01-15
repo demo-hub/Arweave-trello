@@ -1,4 +1,9 @@
 <mat-card class="card" draggable="true" (dragstart)="dragStart($event)" id="{{card.id}}">
-    {{card.title}}{{card.description ? ' - ' + card.description : ''}}
-    <fa-icon [icon]="times" (click)="deleteCard(card.id)"></fa-icon>
+    <mat-card-header>
+        <mat-card-title>{{card.title}}</mat-card-title>
+        <fa-icon [icon]="times" (click)="deleteCard(card.id)"></fa-icon>
+    </mat-card-header>
+    <mat-card-content *ngIf="card.description">
+        {{card.description}}
+    </mat-card-content>
 </mat-card>

@@ -16,3 +16,8 @@ fa-icon {
 fa-icon:hover {
     cursor: pointer;
 }
+
+mat-card-header {
+    display: flex;
+    justify-content: space-between;
+}
