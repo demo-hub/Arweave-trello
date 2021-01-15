@@ -1,6 +1,8 @@
 import { Component, HostListener, Input, NgZone, OnInit } from '@angular/core';
 import { ListSchema } from '../listSchema';
 import { CardStore } from '../cardStore';
+import { MatDialog } from '@angular/material';
+import { AddCardComponent } from '../add-card/add-card.component';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -10,7 +12,7 @@ export class ListComponent implements OnInit {
   @Input() list: ListSchema;
   @Input() cardStore: CardStore;
   displayAddCard = false;
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private dialog: MatDialog) {}
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
@@ -44,14 +46,28 @@ export class ListComponent implements OnInit {
 
     await this.cardStore.changeState(data, target.className.split(' ')[1]);
   }
-  async onEnter(value: string, state: string) {
+
+  /* async onEnter(value: string, state: string) {
     const cardId = await this.cardStore.newCard(value, state);
     this.ngZone.run(() => {
       this.list.cards.push(cardId);
     });
-  }
+  } */
 
   cardDeleted(id: string) {
     this.list.cards.splice(this.list.cards.indexOf(JSON.parse(id)), 1);
+  }
+
+
+  async openAddCard() {
+    const dialogRef = this.dialog.open(AddCardComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+
+      const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
+      this.list.cards.push(cardId);
+    });
   }
 }

@@ -8,16 +8,20 @@ import { ListComponent } from './list/list.component';
 import { BoardComponent } from './board/board.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AddCardComponent } from './add-card/add-card.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
     ListComponent,
-    BoardComponent
+    BoardComponent,
+    AddCardComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatButtonModule,
     MatCardModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -31,10 +31,10 @@ export class BoardComponent implements OnInit {
 
       if (toDoCards.length > 0) {
          const reduced = toDoCards.reduce((res, card) => {
-                                if (!res[card.description]) {
-                                  res[card.description] = card;
-                                } else if (res[card.description].created < card.created) {
-                                  res[card.description] = card;
+                                if (!res[card.title]) {
+                                  res[card.title] = card;
+                                } else if (res[card.title].created < card.created) {
+                                  res[card.title] = card;
                                 }
 
                                 return res;
@@ -47,10 +47,10 @@ export class BoardComponent implements OnInit {
 
       if (doingCards.length > 0) {
         const reduced = doingCards.reduce((res, card) => {
-          if (!res[card.description]) {
-            res[card.description] = card;
-          } else if (res[card.description].created < card.created) {
-            res[card.description] = card;
+          if (!res[card.title]) {
+            res[card.title] = card;
+          } else if (res[card.title].created < card.created) {
+            res[card.title] = card;
           }
 
           return res;
@@ -63,10 +63,10 @@ export class BoardComponent implements OnInit {
 
       if (doneCards.length > 0) {
         const reduced = doneCards.reduce((res, card) => {
-          if (!res[card.description]) {
-            res[card.description] = card;
-          } else if (res[card.description].created < card.created) {
-            res[card.description] = card;
+          if (!res[card.title]) {
+            res[card.title] = card;
+          } else if (res[card.title].created < card.created) {
+            res[card.title] = card;
           }
 
           return res;
@@ -76,7 +76,7 @@ export class BoardComponent implements OnInit {
       }
 
       toDoCards.forEach(element => {
-        const doingReplicants = doingCards.filter(c => c.description === element.description);
+        const doingReplicants = doingCards.filter(c => c.title === element.title);
         if (doingReplicants.length > 0) {
           doingReplicants.forEach(doingElement => {
             if (new Date(doingElement.created) > new Date(element.created)) {
@@ -87,7 +87,7 @@ export class BoardComponent implements OnInit {
           });
         }
 
-        const doneReplicants = doneCards.filter(c => c.description === element.description);
+        const doneReplicants = doneCards.filter(c => c.title === element.title);
         if (doneReplicants.length > 0) {
           doneReplicants.forEach(doneElement => {
             if (new Date(doneElement.created) > new Date(element.created)) {
@@ -100,7 +100,7 @@ export class BoardComponent implements OnInit {
       });
 
       doneCards.forEach(element => {
-        const doingReplicants = doingCards.filter(c => c.description === element.description);
+        const doingReplicants = doingCards.filter(c => c.title === element.title);
         if (doingReplicants.length > 0) {
           doingReplicants.forEach(doingElement => {
             if (new Date(doingElement.created) > new Date(element.created)) {

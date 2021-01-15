@@ -50,8 +50,9 @@ export class CardStore {
     return JSON.parse(transaction.toString());
   }
 
-  async newCard(description: string, state: string): Promise<CardSchema> {
+  async newCard(title: string, description: string, state: string): Promise<CardSchema> {
     const card = new CardSchema();
+    card.title = title;
     card.description = description;
     card.created = new Date();
     card.active = true;
@@ -168,7 +169,7 @@ export class CardStore {
     for (const r of results) {
       const transaction = await arweave.transactions.getData(r.node.id, {decode: true, string: true});
 
-      if (JSON.parse(transaction.toString()).description) {
+      if (JSON.parse(transaction.toString()).title) {
         result.push(JSON.parse(transaction.toString()));
 
         result[result.length - 1].id = transaction.toString();
@@ -220,6 +221,7 @@ export class CardStore {
 
   async deleteCard(data: any) {
     const card = new CardSchema();
+    card.title = JSON.parse(data).title;
     card.description = JSON.parse(data).description;
     card.created = new Date();
     card.active = false;

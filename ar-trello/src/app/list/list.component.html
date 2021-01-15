@@ -4,7 +4,7 @@
         <app-card *ngFor="let card of list.cards" [card]="card" [store]="cardStore" (cardRemoved)="cardDeleted($event)"></app-card>
     </div>
 
-    <input #addCardInput type="text" (keyup.enter)="onEnter(addCardInput.value, list.name); addCardInput.value=''; displayAddCard=false;" *ngIf="displayAddCard" autofocus>
+    <!-- <input #addCardInput type="text" (keyup.enter)="onEnter(addCardInput.value, list.name); addCardInput.value=''; displayAddCard=false;" *ngIf="displayAddCard" autofocus> -->
     <br>
-    <button mat-button href="#" class="list__newcard" (click)="toggleDisplayAddCard();">Add a card...</button>
+    <button mat-button href="#" class="list__newcard" (click)="openAddCard();">Add a task</button>
 </div>
