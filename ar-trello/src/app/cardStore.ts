@@ -187,6 +187,7 @@ export class CardStore {
 
   async changeState(data: any, state: string) {
     const card = new CardSchema();
+    card.title = JSON.parse(data).title;
     card.description = JSON.parse(data).description;
     card.created = new Date();
     card.active = true;
