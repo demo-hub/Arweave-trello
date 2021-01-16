@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, NgZone, OnInit } from '@angular/core';
 import { ListSchema } from '../listSchema';
 import { CardStore } from '../cardStore';
 import { MatDialog } from '@angular/material';
@@ -55,7 +55,7 @@ export class ListComponent implements OnInit {
   } */
 
   cardDeleted(id: string) {
-    this.list.cards.splice(this.list.cards.indexOf(JSON.parse(id)), 1);
+    this.list.cards.splice(this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]), 1);
   }
 
 
@@ -78,7 +78,8 @@ export class ListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async result => {
       const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
-      this.list.cards.push(cardId);
+      const index = this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]);
+      this.list.cards[index] = cardId;
     });
   }
 }
