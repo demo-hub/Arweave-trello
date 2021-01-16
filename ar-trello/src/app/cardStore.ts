@@ -57,9 +57,12 @@ export class CardStore {
     card.created = new Date();
     card.active = true;
 
+    let auth = true;
+
     let key = await WeaveID.getWallet();
 
     if (!key || Object.keys(key).length === 0) {
+      auth = false;
       key = await arweave.wallets.generate();
     }
 
@@ -69,8 +72,9 @@ export class CardStore {
       data: txData
     }, key);
 
-    transactionA.addTag('app', 'arTrello');
+    transactionA.addTag('App-Name', 'everlasting');
     transactionA.addTag('state', state);
+    transactionA.addTag('auth', auth.toString());
 
     await arweave.transactions.sign(transactionA, key);
 
@@ -98,8 +102,9 @@ export class CardStore {
           transactions(
             owners: [$addr]
             tags: [
-              { name: "app", values: "arTrello" }
-              { name: "state", values: $state }
+              { name: "App-Name", values: "everlasting" }
+              { name: "state", values: $state },
+              { name: "auth", values: "true" }
             ]
             after: $cursor
           ) {
@@ -133,8 +138,9 @@ export class CardStore {
         query($state: [String!]!, $cursor: String) {
           transactions(
             tags: [
-              { name: "app", values: "arTrello" }
-              { name: "state", values: $state }
+              { name: "App-Name", values: "everlasting" }
+              { name: "state", values: $state },
+              { name: "auth", values: "false" }
             ]
             after: $cursor
           ) {
@@ -185,9 +191,12 @@ export class CardStore {
     card.created = new Date();
     card.active = true;
 
+    let auth = true;
+
     let key = await WeaveID.getWallet();
 
     if (!key || Object.keys(key).length === 0) {
+      auth = false;
       key = await arweave.wallets.generate();
     }
 
@@ -201,8 +210,9 @@ export class CardStore {
       state = 'To Do';
     }
 
-    transactionA.addTag('app', 'arTrello');
+    transactionA.addTag('App-Name', 'everlasting');
     transactionA.addTag('state', state);
+    transactionA.addTag('auth', auth.toString());
 
     await arweave.transactions.sign(transactionA, key, { saltLength: 1 });
 
@@ -226,9 +236,12 @@ export class CardStore {
     card.created = new Date();
     card.active = false;
 
+    let auth = true;
+
     let key = await WeaveID.getWallet();
 
     if (!key || Object.keys(key).length === 0) {
+      auth = false;
       key = await arweave.wallets.generate();
     }
 
@@ -238,8 +251,9 @@ export class CardStore {
       data: txData
     }, key);
 
-    transactionA.addTag('app', 'arTrello');
+    transactionA.addTag('App-Name', 'everlasting');
     transactionA.addTag('state', 'To Do');
+    transactionA.addTag('auth', auth.toString());
 
     await arweave.transactions.sign(transactionA, key, { saltLength: 1 });
 
