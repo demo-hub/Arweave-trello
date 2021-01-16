@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardSchema } from '../cardSchema';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CardStore } from '../cardStore';
 @Component({
   selector: 'app-card',
@@ -12,11 +12,15 @@ export class CardComponent implements OnInit {
   // icons
   times = faTimes;
 
+  edit = faEdit;
+
   @Input() card: CardSchema;
 
   @Input() store: CardStore;
 
   @Output() cardRemoved = new EventEmitter<string>();
+
+  @Output() cardEdit = new EventEmitter<string>();
 
   constructor() {}
 
@@ -30,6 +34,10 @@ export class CardComponent implements OnInit {
     await this.store.deleteCard(id);
 
     this.cardRemoved.emit(id);
+  }
+
+  async editCard(id: string) {
+    this.cardEdit.emit(id);
   }
 
 }

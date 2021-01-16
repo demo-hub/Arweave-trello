@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-card',
@@ -11,12 +11,14 @@ export class AddCardComponent implements OnInit {
 
   addTaskForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<AddCardComponent>) { }
+  constructor(private formBuilder: FormBuilder,
+              public dialogRef: MatDialogRef<AddCardComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: string) { }
 
   ngOnInit(): void {
     this.addTaskForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: ['']
+      title: [(this.data ? JSON.parse(this.data).title : ''), Validators.required],
+      description: [(this.data ? JSON.parse(this.data).description : '')]
     });
   }
 

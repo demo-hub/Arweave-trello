@@ -65,7 +65,18 @@ export class ListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async result => {
+      const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
+      this.list.cards.push(cardId);
+    });
+  }
 
+  openCardEdit(id: string) {
+    const dialogRef = this.dialog.open(AddCardComponent, {
+      width: '250px',
+      data: id
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
       const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
       this.list.cards.push(cardId);
     });

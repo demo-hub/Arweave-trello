@@ -8,9 +8,14 @@ mat-card {
     margin-top: 2%;
 }
 
-fa-icon {
+.delete {
     float: right;
     color: red;
+}
+
+.edit {
+    color: yellow;
+    padding-right: 0.3em;
 }
 
 fa-icon:hover {
