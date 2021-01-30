@@ -77,6 +77,7 @@ export class ListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async result => {
+      await this.cardStore.deleteCard(id);
       const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
       const index = this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]);
       this.list.cards[index] = cardId;

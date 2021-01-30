@@ -113,6 +113,7 @@ export class BoardComponent implements OnInit {
       });
 
       if (toDoCards.length > 0) {
+        console.log(toDoCards)
         toDoCards = toDoCards.filter(c => c.active);
       }
 
