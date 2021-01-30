@@ -16,6 +16,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     MatGridListModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    MatTooltipModule
+    MatTooltipModule,
+    NotifierModule
   ],
   providers: [],
   bootstrap: [AppComponent]

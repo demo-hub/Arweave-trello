@@ -263,5 +263,7 @@ export class CardStore {
     while (!uploader.isComplete) {
       await uploader.uploadChunk();
     }
+
+    return data;
   }
 }

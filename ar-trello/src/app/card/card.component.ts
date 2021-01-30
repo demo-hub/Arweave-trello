@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardSchema } from '../cardSchema';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CardStore } from '../cardStore';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -22,7 +23,7 @@ export class CardComponent implements OnInit {
 
   @Output() cardEdit = new EventEmitter<string>();
 
-  constructor() {}
+  constructor(private notifierService: NotifierService) {}
 
   ngOnInit() {}
 
@@ -31,7 +32,9 @@ export class CardComponent implements OnInit {
   }
 
   async deleteCard(id: string) {
-    await this.store.deleteCard(id);
+    this.notifierService.notify('warning', 'A transaction is being made');
+
+    id = await this.store.deleteCard(id);
 
     this.cardRemoved.emit(id);
   }

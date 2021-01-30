@@ -3,23 +3,32 @@ import { ListSchema } from '../listSchema';
 import { CardStore } from '../cardStore';
 import { MatDialog } from '@angular/material';
 import { AddCardComponent } from '../add-card/add-card.component';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
+
   @Input() list: ListSchema;
+
   @Input() cardStore: CardStore;
+
   displayAddCard = false;
-  constructor(private ngZone: NgZone, private dialog: MatDialog) {}
+
+  constructor(private dialog: MatDialog, private notifier: NotifierService) {}
+
   toggleDisplayAddCard() {
     this.displayAddCard = !this.displayAddCard;
   }
+
   ngOnInit(): void {}
+
   allowDrop($event) {
     $event.preventDefault();
   }
+
   async drop($event) {
     $event.preventDefault();
     const data = $event.dataTransfer.getData('text');
@@ -44,7 +53,13 @@ export class ListComponent implements OnInit {
       target.appendChild(document.getElementById(data));
     }
 
-    await this.cardStore.changeState(data, target.className.split(' ')[1]);
+    this.notifier.notify('warning', 'A transaction is being made');
+
+    const result = await this.cardStore.changeState(data, target.className.split(' ')[1]);
+
+    console.log(result);
+
+    this.notifier.notify('success', 'The transaction has completed');
   }
 
   /* async onEnter(value: string, state: string) {
@@ -56,17 +71,22 @@ export class ListComponent implements OnInit {
 
   cardDeleted(id: string) {
     this.list.cards.splice(this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]), 1);
+
+    this.notifier.notify('success', 'The transaction has completed');
   }
 
 
   async openAddCard() {
+
     const dialogRef = this.dialog.open(AddCardComponent, {
       width: '250px'
     });
 
     dialogRef.afterClosed().subscribe(async result => {
+      this.notifier.notify('warning', 'A transaction is being made');
       const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
       this.list.cards.push(cardId);
+      this.notifier.notify('success', 'The transaction has completed');
     });
   }
 
@@ -77,10 +97,12 @@ export class ListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async result => {
+      this.notifier.notify('warning', 'A transaction is being made');
       await this.cardStore.deleteCard(id);
       const cardId = await this.cardStore.newCard(result.title, result.description, this.list.name);
       const index = this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]);
       this.list.cards[index] = cardId;
+      this.notifier.notify('success', 'The transaction has completed');
     });
   }
 }
