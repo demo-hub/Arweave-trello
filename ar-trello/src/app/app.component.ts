@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import WeaveID from 'weaveid';
 import { CardStore } from './cardStore';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit {
 
   twitter = faTwitter;
 
+  constructor(private notifier: NotifierService) {}
+
   async ngOnInit() {
     // Initialize WeaveID:
     WeaveID.init();
@@ -29,5 +32,9 @@ export class AppComponent implements OnInit {
     const address = await WeaveID.openLoginModal();
 
     this.cardStore.loginDone(address);
+
+    this.notifier.getConfig().behaviour.autoHide = false;
+
+    this.notifier.notify('warning', 'Every action you take (create, edit, delete or change state of tasks) will be recorded in a form of a transaction on the Arweave network. These transactions have a minimal fee.');
   }
 }
