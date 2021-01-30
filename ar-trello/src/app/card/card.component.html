@@ -2,8 +2,8 @@
     <mat-card-header>
         <mat-card-title>{{card.title}}</mat-card-title>
         <div>
-            <fa-icon [icon]="edit" class="edit" (click)="editCard(card.id)"></fa-icon>
-            <fa-icon [icon]="times" class="delete" (click)="deleteCard(card.id)"></fa-icon>
+            <fa-icon [icon]="edit" class="edit" (click)="editCard(card.id)" matTooltip="Edit"></fa-icon>
+            <fa-icon [icon]="times" class="delete" (click)="deleteCard(card.id)" matTooltip="Delete"></fa-icon>
         </div>
     </mat-card-header>
     <mat-card-content>
