@@ -18,7 +18,8 @@ export class AddCardComponent implements OnInit {
   ngOnInit(): void {
     this.addTaskForm = this.formBuilder.group({
       title: [(this.data ? JSON.parse(this.data).title : ''), Validators.required],
-      description: [(this.data ? JSON.parse(this.data).description : '')]
+      description: [(this.data ? JSON.parse(this.data).description : '')],
+      priority: [(this.data ? JSON.parse(this.data).priority : '')]
     });
   }
 

@@ -12,6 +12,15 @@
             <input matInput formControlName="description">
         </mat-form-field>
 
+        <mat-form-field>
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+                <mat-option value="high">High</mat-option>
+                <mat-option value="medium">Medium</mat-option>
+                <mat-option value="low">Low</mat-option>
+            </mat-select>
+        </mat-form-field>
+
     </form>
 </div>
 <div mat-dialog-actions>

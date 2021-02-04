@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardSchema } from '../cardSchema';
-import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faFlag, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CardStore } from '../cardStore';
 import { NotifierService } from 'angular-notifier';
 @Component({
@@ -14,6 +14,8 @@ export class CardComponent implements OnInit {
   times = faTimes;
 
   edit = faEdit;
+
+  flag = faFlag;
 
   @Input() card: CardSchema;
 

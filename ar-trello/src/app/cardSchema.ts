@@ -4,4 +4,5 @@ export class CardSchema {
   description: string;
   created: Date;
   active: boolean;
+  priority: string;
 }

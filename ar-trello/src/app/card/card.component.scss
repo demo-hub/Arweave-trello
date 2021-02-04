@@ -26,3 +26,21 @@ mat-card-header {
     display: flex;
     justify-content: space-between;
 }
+
+.high {
+    color: red;
+    padding-right: 0.3em;
+    font-size: 12px;
+}
+
+.medium {
+    color: yellow;
+    padding-right: 0.3em;
+    font-size: 12px;
+}
+
+.low {
+    color: green;
+    padding-right: 0.3em;
+    font-size: 12px;
+}

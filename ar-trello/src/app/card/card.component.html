@@ -1,6 +1,8 @@
 <mat-card class="card" draggable="true" (dragstart)="dragStart($event)" id="{{card.id}}">
     <mat-card-header>
-        <mat-card-title>{{card.title}}</mat-card-title>
+        <mat-card-title>
+            <fa-icon [icon]="flag" [ngClass]="card.priority" [matTooltip]="card.priority ? card.priority + ' priority' : ''"></fa-icon> {{card.title}}
+        </mat-card-title>
         <div>
             <fa-icon [icon]="edit" class="edit" (click)="editCard(card.id)" matTooltip="Edit"></fa-icon>
             <fa-icon [icon]="times" class="delete" (click)="deleteCard(card.id)" matTooltip="Delete"></fa-icon>
