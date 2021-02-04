@@ -22,7 +22,7 @@ export class AddCardComponent implements OnInit {
       title: [(this.data ? JSON.parse(this.data).title : ''), Validators.required],
       description: [(this.data ? JSON.parse(this.data).description : '')],
       priority: [(this.data ? JSON.parse(this.data).priority : '')],
-      tags: [[]],
+      tags: [(this.data ? JSON.parse(this.data).tags : [])],
       tag: ['']
     });
   }
