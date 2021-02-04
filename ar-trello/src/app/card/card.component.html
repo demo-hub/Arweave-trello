@@ -1,7 +1,7 @@
 <mat-card class="card" draggable="true" (dragstart)="dragStart($event)" id="{{card.id}}">
     <mat-card-header>
         <mat-card-title>
-            <fa-icon [icon]="flag" [ngClass]="card.priority" [matTooltip]="card.priority ? card.priority + ' priority' : ''"></fa-icon> {{card.title}}
+            <fa-icon [hidden]="!card.priority" [icon]="flag" [ngClass]="card.priority" [matTooltip]="card.priority ? card.priority + ' priority' : ''"></fa-icon> {{card.title}}
         </mat-card-title>
         <div>
             <fa-icon [icon]="edit" class="edit" (click)="editCard(card.id)" matTooltip="Edit"></fa-icon>
@@ -11,4 +11,7 @@
     <mat-card-content>
         {{card.description ? card.description : ''}}
     </mat-card-content>
+    <mat-card-footer>
+
+    </mat-card-footer>
 </mat-card>

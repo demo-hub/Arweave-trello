@@ -21,6 +21,24 @@
             </mat-select>
         </mat-form-field>
 
+        <div mat-dialog-actions>
+            <mat-form-field>
+                <mat-label>Tag</mat-label>
+                <input matInput formControlName="tag" class="tag-input">
+            </mat-form-field>
+            <button mat-button (click)="addTag()" class="add-button">Add Tag</button>
+        </div>
+
+        <br>
+
+        <mat-selection-list #tags [multiple]="false">
+            <mat-list-option *ngFor="let tag of addTaskForm.controls.tags.value">
+                {{tag}}
+            </mat-list-option>
+        </mat-selection-list>
+
+
+
     </form>
 </div>
 <div mat-dialog-actions>

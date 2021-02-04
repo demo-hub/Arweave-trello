@@ -3,6 +3,10 @@
     color: white;
 }
 
+.tag-input {
+    padding-right: 0.3em;
+}
+
 ::ng-deep .mat-focused .mat-form-field-label {
     /*change color of label*/
     color: black !important;

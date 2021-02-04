@@ -19,12 +19,23 @@ export class AddCardComponent implements OnInit {
     this.addTaskForm = this.formBuilder.group({
       title: [(this.data ? JSON.parse(this.data).title : ''), Validators.required],
       description: [(this.data ? JSON.parse(this.data).description : '')],
-      priority: [(this.data ? JSON.parse(this.data).priority : '')]
+      priority: [(this.data ? JSON.parse(this.data).priority : '')],
+      tags: [[]],
+      tag: ['']
     });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  addTag() {
+    if (this.addTaskForm.controls.tag.value) {
+      this.addTaskForm.controls.tags.value.push(this.addTaskForm.controls.tag.value);
+      this.addTaskForm.patchValue({
+        tag: ''
+      });
+    }
   }
 
 }

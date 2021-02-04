@@ -79,7 +79,7 @@ export class ListComponent implements OnInit {
   async openAddCard() {
 
     const dialogRef = this.dialog.open(AddCardComponent, {
-      width: '250px'
+      width: '350px'
     });
 
     dialogRef.afterClosed().subscribe(async result => {
@@ -91,9 +91,8 @@ export class ListComponent implements OnInit {
   }
 
   openCardEdit(id: string) {
-    console.log(id);
     const dialogRef = this.dialog.open(AddCardComponent, {
-      width: '250px',
+      width: '350px',
       data: id
     });
 
