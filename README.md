@@ -8,7 +8,7 @@ Beta version: https://arweave.net/DXu5qFTHpr5WjByEkblCXORgS-COSXbnF4pYXCtQ2Co.
 
 ## Visuals
 
-![screenshot](screenshot1.PNG)
+![screenshot](screenshot.PNG)
 
 ## Usage
 
