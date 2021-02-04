@@ -9,7 +9,12 @@
         </div>
     </mat-card-header>
     <mat-card-content>
-        {{card.description ? card.description : ''}}
+        {{card.description ? 'Description: ' + card.description : ''}}
+        <br><br>
+        <p>Subtasks:</p>
+        <ul>
+            <li *ngFor="let subtask of card.subtasks">{{subtask}}</li>
+        </ul>
     </mat-card-content>
     <mat-card-footer>
         <p>{{card.tags.length > 0 ? 'Tags: ' : ''}}<span *ngFor="let tag of card.tags">{{tag}}</span></p>

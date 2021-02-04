@@ -79,12 +79,17 @@ export class ListComponent implements OnInit {
   async openAddCard() {
 
     const dialogRef = this.dialog.open(AddCardComponent, {
-      width: '350px'
+      width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(async result => {
       this.notifier.notify('warning', 'A transaction is being made');
-      const cardId = await this.cardStore.newCard(result.title, result.description, result.priority, result.tags, this.list.name);
+      const cardId = await this.cardStore.newCard(result.title,
+        result.description,
+        result.priority,
+        result.tags,
+        result.subtasks,
+        this.list.name);
       this.list.cards.push(cardId);
       this.notifier.notify('success', 'The transaction has completed');
     });
@@ -92,7 +97,7 @@ export class ListComponent implements OnInit {
 
   openCardEdit(id: string) {
     const dialogRef = this.dialog.open(AddCardComponent, {
-      width: '350px',
+      width: '400px',
       data: id
     });
 
@@ -100,7 +105,12 @@ export class ListComponent implements OnInit {
       if (result) {
         this.notifier.notify('warning', 'A transaction is being made');
         await this.cardStore.deleteCard(id);
-        const cardId = await this.cardStore.newCard(result.title, result.description, result.priority, result.tags, this.list.name);
+        const cardId = await this.cardStore.newCard(result.title,
+          result.description,
+          result.priority,
+          result.tags,
+          result.subtasks,
+          this.list.name);
         const index = this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]);
         this.list.cards[index] = cardId;
         this.notifier.notify('success', 'The transaction has completed');

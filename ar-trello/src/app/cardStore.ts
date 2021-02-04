@@ -50,7 +50,12 @@ export class CardStore {
     return JSON.parse(transaction.toString());
   }
 
-  async newCard(title: string, description: string, priority: string, tags: string[], state: string): Promise<CardSchema> {
+  async newCard(title: string,
+                description: string,
+                priority: string,
+                tags: string[],
+                subtasks: string[],
+                state: string): Promise<CardSchema> {
     const card = new CardSchema();
     card.title = title;
     card.description = description;
@@ -58,6 +63,7 @@ export class CardStore {
     card.active = true;
     card.priority = priority;
     card.tags = tags;
+    card.subtasks = subtasks;
 
     let auth = true;
 
@@ -195,6 +201,7 @@ export class CardStore {
     card.active = true;
     card.priority = data.priority ? data.priority : '';
     card.tags = data.tags;
+    card.subtasks = data.subtasks;
 
     let auth = true;
 
@@ -242,6 +249,7 @@ export class CardStore {
     card.active = false;
     card.priority = data.priority ? data.priority : '';
     card.tags = data.tags;
+    card.subtasks = data.subtasks;
 
     let auth = true;
 

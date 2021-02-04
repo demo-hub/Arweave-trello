@@ -13,6 +13,8 @@ export class AddCardComponent implements OnInit {
 
   showDeleteTag = false;
 
+  showDeleteSubtask = false;
+
   constructor(private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<AddCardComponent>,
               @Inject(MAT_DIALOG_DATA) public data: string) { }
@@ -23,7 +25,9 @@ export class AddCardComponent implements OnInit {
       description: [(this.data ? JSON.parse(this.data).description : '')],
       priority: [(this.data ? JSON.parse(this.data).priority : '')],
       tags: [(this.data ? JSON.parse(this.data).tags : [])],
-      tag: ['']
+      tag: [''],
+      subtasks: [(this.data ? JSON.parse(this.data).subtasks : [])],
+      subtask: ['']
     });
   }
 
@@ -44,6 +48,21 @@ export class AddCardComponent implements OnInit {
     const index = this.addTaskForm.controls.tags.value.indexOf(value);
     this.addTaskForm.controls.tags.value.splice(index, 1);
     this.showDeleteTag = !this.showDeleteTag;
+  }
+
+  addSubtask() {
+    if (this.addTaskForm.controls.subtask.value) {
+      this.addTaskForm.controls.subtasks.value.push(this.addTaskForm.controls.subtask.value);
+      this.addTaskForm.patchValue({
+        subtask: ''
+      });
+    }
+  }
+
+  deleteSubtask(value: string) {
+    const index = this.addTaskForm.controls.subtasks.value.indexOf(value);
+    this.addTaskForm.controls.subtasks.value.splice(index, 1);
+    this.showDeleteSubtask = !this.showDeleteSubtask;
   }
 
 }

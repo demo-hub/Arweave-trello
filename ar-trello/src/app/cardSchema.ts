@@ -6,4 +6,5 @@ export class CardSchema {
   active: boolean;
   priority: string;
   tags: string[];
+  subtasks: string[];
 }

@@ -45,6 +45,28 @@
 
         <br>
 
+        <p class="separator">Subtasks</p>
+
+        <div mat-dialog-actions>
+            <mat-form-field>
+                <mat-label>Subtask</mat-label>
+                <input matInput formControlName="subtask" class="tag-input">
+            </mat-form-field>
+            <button mat-button (click)="addSubtask()" class="add-button">Add Subtask</button>
+        </div>
+
+        <mat-selection-list #subtasks [multiple]="false">
+            <mat-list-option *ngFor="let subtask of addTaskForm.controls.subtasks.value" (click)="showDeleteSubtask = true" [value]="subtask">
+                {{subtask}}
+            </mat-list-option>
+        </mat-selection-list>
+
+        <br>
+
+        <button [hidden]="!showDeleteSubtask" mat-button (click)="deleteSubtask(subtasks.selectedOptions.selected[0]?.value)" class="delete-button">Delete Subtask</button>
+
+        <br>
+
     </form>
 </div>
 <div mat-dialog-actions>
