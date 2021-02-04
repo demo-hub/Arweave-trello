@@ -3,6 +3,11 @@
     color: white;
 }
 
+.delete-button {
+    background-color: red;
+    color: white;
+}
+
 .tag-input {
     padding-right: 0.3em;
 }
@@ -24,4 +29,9 @@
 
 ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
     background-color: red !important;
+}
+
+.separator {
+    font-weight: bold;
+    font-size: 18px;
 }

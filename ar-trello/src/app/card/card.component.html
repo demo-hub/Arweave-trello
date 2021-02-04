@@ -12,6 +12,6 @@
         {{card.description ? card.description : ''}}
     </mat-card-content>
     <mat-card-footer>
-
+        <p>{{card.tags.length > 0 ? 'Tags: ' : ''}}<span *ngFor="let tag of card.tags">{{tag}}</span></p>
     </mat-card-footer>
 </mat-card>

@@ -21,6 +21,10 @@
             </mat-select>
         </mat-form-field>
 
+        <br><br>
+
+        <p class="separator">Tags</p>
+
         <div mat-dialog-actions>
             <mat-form-field>
                 <mat-label>Tag</mat-label>
@@ -29,15 +33,17 @@
             <button mat-button (click)="addTag()" class="add-button">Add Tag</button>
         </div>
 
-        <br>
-
         <mat-selection-list #tags [multiple]="false">
-            <mat-list-option *ngFor="let tag of addTaskForm.controls.tags.value">
+            <mat-list-option *ngFor="let tag of addTaskForm.controls.tags.value" (click)="showDeleteTag = true" [value]="tag">
                 {{tag}}
             </mat-list-option>
         </mat-selection-list>
 
+        <br>
 
+        <button [hidden]="!showDeleteTag" mat-button (click)="deleteTag(tags.selectedOptions.selected[0]?.value)" class="delete-button">Delete Tag</button>
+
+        <br>
 
     </form>
 </div>

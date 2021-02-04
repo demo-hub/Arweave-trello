@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, HostListener, Input, NgZone, OnInit } from '@angular/core';
 import { ListSchema } from '../listSchema';
 import { CardStore } from '../cardStore';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AddCardComponent } from '../add-card/add-card.component';
 import { NotifierService } from 'angular-notifier';
 @Component({
@@ -84,7 +84,7 @@ export class ListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async result => {
       this.notifier.notify('warning', 'A transaction is being made');
-      const cardId = await this.cardStore.newCard(result.title, result.description, result.priority, this.list.name);
+      const cardId = await this.cardStore.newCard(result.title, result.description, result.priority, result.tags, this.list.name);
       this.list.cards.push(cardId);
       this.notifier.notify('success', 'The transaction has completed');
     });
@@ -100,7 +100,7 @@ export class ListComponent implements OnInit {
       if (result) {
         this.notifier.notify('warning', 'A transaction is being made');
         await this.cardStore.deleteCard(id);
-        const cardId = await this.cardStore.newCard(result.title, result.description, result.priority, this.list.name);
+        const cardId = await this.cardStore.newCard(result.title, result.description, result.priority, result.tags, this.list.name);
         const index = this.list.cards.indexOf(this.list.cards.filter(c => c.id === id)[0]);
         this.list.cards[index] = cardId;
         this.notifier.notify('success', 'The transaction has completed');

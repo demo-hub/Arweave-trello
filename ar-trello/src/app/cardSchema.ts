@@ -5,4 +5,5 @@ export class CardSchema {
   created: Date;
   active: boolean;
   priority: string;
+  tags: string[];
 }

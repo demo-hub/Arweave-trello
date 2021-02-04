@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-card',
@@ -10,6 +10,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class AddCardComponent implements OnInit {
 
   addTaskForm: FormGroup;
+
+  showDeleteTag = false;
 
   constructor(private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<AddCardComponent>,
@@ -36,6 +38,12 @@ export class AddCardComponent implements OnInit {
         tag: ''
       });
     }
+  }
+
+  deleteTag(value: string) {
+    const index = this.addTaskForm.controls.tags.value.indexOf(value);
+    this.addTaskForm.controls.tags.value.splice(index, 1);
+    this.showDeleteTag = !this.showDeleteTag;
   }
 
 }
