@@ -5,3 +5,22 @@ div {
     // height: 70vh;
     // overflow-x: scroll;
 }
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: black !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: black !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: black !important;
+}
+
+form {
+    padding: 0 5px;
+}

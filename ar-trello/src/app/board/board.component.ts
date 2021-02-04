@@ -1,4 +1,5 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CardStore } from '../cardStore';
 import { ListSchema } from '../listSchema';
 
@@ -12,7 +13,11 @@ export class BoardComponent implements OnInit {
 
   lists: ListSchema[];
 
-  constructor(private ngZone: NgZone) { }
+  originalLists: ListSchema[];
+
+  filterForm: FormGroup;
+
+  constructor(private ngZone: NgZone, private formBuilder: FormBuilder) { }
 
   async setMockData() {
     this.store.login$.subscribe(async address => {
@@ -24,6 +29,10 @@ export class BoardComponent implements OnInit {
     await this.setMockData();
 
     await this.getLists();
+
+    this.filterForm = this.formBuilder.group({
+      filter: ['']
+    });
   }
 
   async getLists(address?: string) {
@@ -113,7 +122,6 @@ export class BoardComponent implements OnInit {
       });
 
       if (toDoCards.length > 0) {
-        console.log(toDoCards)
         toDoCards = toDoCards.filter(c => c.active);
       }
 
@@ -142,7 +150,42 @@ export class BoardComponent implements OnInit {
         ];
 
         this.lists = lists;
+
+        this.originalLists = [
+          {
+            name: 'To Do',
+            cards: toDoCards
+          },
+          {
+            name: 'Doing',
+            cards: doingCards
+          },
+          {
+            name: 'Done',
+            cards: doneCards
+          }
+        ];
     });
+  }
+
+  filterBoard(text: string) {
+    if (text) {
+      this.lists[0].cards = this.originalLists[0].cards.filter(c => c.tags.filter(t => t.includes(text)).length > 0 ||
+                                                      c.title.includes(text) ||
+                                                      c.description.includes(text));
+
+      this.lists[1].cards = this.originalLists[1].cards.filter(c => c.tags.filter(t => t.includes(text)).length > 0 ||
+                                                      c.title.includes(text) ||
+                                                      c.description.includes(text));
+
+      this.lists[2].cards = this.originalLists[2].cards.filter(c => c.tags.filter(t => t.includes(text)).length > 0 ||
+                                                      c.title.includes(text) ||
+                                                      c.description.includes(text));
+    } else {
+      this.lists[0].cards = this.originalLists[0].cards;
+      this.lists[1].cards = this.originalLists[1].cards;
+      this.lists[2].cards = this.originalLists[2].cards;
+    }
   }
 
 }
