@@ -4,6 +4,8 @@ Trello clone made in Angular 8 using arweave-js to manipulate the data. Based on
 
 Alpha version: https://arweave.net/ZvXbJblZ1ME2DxMTJoXRFTwmxE1NITNWpbIvTFzpZsM.
 
+Beta version: https://arweave.net/DXu5qFTHpr5WjByEkblCXORgS-COSXbnF4pYXCtQ2Co.
+
 ## Visuals
 
 ![screenshot](screenshot1.PNG)
